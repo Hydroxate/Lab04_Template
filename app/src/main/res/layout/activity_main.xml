@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.csis.lab04.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND TO PURE DATA"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/table1">
+
+
+        <TableRow
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/bang1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND BANG1"
+                android:layout_marginRight="@dimen/activity_vertical_margin"/>
+            <Button
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:id="@+id/float1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND Float1" />
+
+            <EditText
+
+                android:id="@+id/text1"
+                android:text="Float1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/bang2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND BANG2"
+                android:layout_marginRight="@dimen/activity_vertical_margin"/>
+            <Button
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:id="@+id/float2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEND Float2" />
+
+            <EditText
+
+                android:id="@+id/text2"
+                android:text="Float2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </TableRow>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/slider1"
+            android:layout_below="@+id/switch1"
+            android:layout_alignParentStart="true"
+            android:max="100" />
+
+        <TableRow>
+
+
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RECEIVED FROM PURE DATA"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/table1"
+        android:id="@+id/text3"/>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/text3">
+
+        <TableRow>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RECEIVED 1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/rtext1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECEIVED 2"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/rtext2"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/received1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/received2"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECEIVED 3"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/rtext3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECEIVED 4"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/rtext4"/>
+        </TableRow>
+        <TableRow
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/received3"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true"
+
+                android:id="@+id/received4"/>
+        </TableRow>
+
+        <TableRow>
+
+        </TableRow>
+    </TableLayout>
+
+
+
+
+</RelativeLayout>

@@ -35,129 +35,23 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher; //must declare this to use later, used to receive data from sendEvents
-    private SeekBar slider1; //Declaring slider1 here
-    float slide1Value = 0.0f;
 
-    TextView received1;
-    TextView received2;
-    TextView received3;
-    TextView received4;
+    TextView myCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//Mandatory
         setContentView(R.layout.activity_main);//Mandatory
 
-        //For declaring and initialising XML items, Always of form OBJECT_TYPE VARIABLE_NAME = (OBJECT_TYPE) findViewById(R.id.ID_SPECIFIED_IN_XML);
-
-        Button bang1 = (Button) findViewById(R.id.bang1); //findViewById uses the ids you specified in the xml!
-        Button bang2 = (Button) findViewById(R.id.bang2); //findViewById uses the ids you specified in the xml!
-
-        Button float1 = (Button) findViewById(R.id.float1); //findViewById uses the ids you specified in the xml!
-        Button float2 = (Button) findViewById(R.id.float2); //findViewById uses the ids you specified in the xml!
-
-        received1 = (TextView) findViewById(R.id.received1);
-        received2 = (TextView) findViewById(R.id.received2);
-        received3 = (TextView) findViewById(R.id.received3);
-        received4 = (TextView) findViewById(R.id.received4);
-
-        final EditText text1 = (EditText) findViewById(R.id.text1);
-        final EditText text2 = (EditText) findViewById(R.id.text2);
-
-
-
-        //Switch switch1 = (Switch) findViewById(R.id.switch1);//declared the switch here pointing to id onOffSwitch
-
-
+        myCounter = (TextView) findViewById(R.id.counter);
 
         try { // try the code below, catch errors if things go wrong
             initPD(); //method is below to start PD
-            loadPDPatch("synth.pd"); // This is the name of the patch in the zip
+            loadPDPatch("counter.pd"); // This is the name of the patch in the zip
         } catch (IOException e) {
             e.printStackTrace(); // print error if init or load patch fails.
             finish(); // end program
         }
-
-        //<------BUTTON CLICK LISTENER--------------->
-        bang1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                sendBangPD("bang1");
-
-            }
-        });
-
-        //<------BUTTON CLICK LISTENER--------------->
-        bang2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                sendBangPD("bang2");
-
-            }
-        });
-
-        //<------BUTTON CLICK LISTENER--------------->
-        float1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                sendFloatPD("float1",Float.parseFloat(text1.getText().toString()));
-
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-
-            }
-        });
-
-        //<------BUTTON CLICK LISTENER--------------->
-        float2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                sendFloatPD("float2",Float.parseFloat(text2.getText().toString()));
-
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-
-            }
-        });
-
-        //<--------SLIDER 1 LISTENER------------>
-        slider1 = (SeekBar) findViewById(R.id.slider1);
-
-        slider1.setOnSeekBarChangeListener(
-                new SeekBar.OnSeekBarChangeListener()
-                {
-
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        slide1Value = progress / 100.0f;
-
-                        sendFloatPD("slider1", slide1Value);
-
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                });
-
-
 
     }
 
@@ -208,51 +102,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void receiveBang(String source)
         {
-            if(source.equals("send1"))
-            {
-                received1.setText("Bang: " + source);
-            }
-            else if(source.equals("send2"))
-            {
-                received2.setText("Bang: " + source);
-            }
-            else if(source.equals("send3"))
-            {
-                received3.setText("Bang: " + source);
-            }
-            else if(source.equals("send4"))
-            {
-                received4.setText("Bang: " + source);
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(),"Other ReceiveEvent called",Toast.LENGTH_LONG);
-            }
             pdPost("bang");
         }
 
         @Override
         public void receiveFloat(String source, float x) {
             pdPost("float: " + x);
-            if(source.equals("send1"))
-            {
-                received1.setText("Float: " + x);
-            }
-            else if(source.equals("send2"))
-            {
-                received2.setText("Float: " + x);
-            }
-            else if(source.equals("send3"))
-            {
-                received3.setText("Float: " + x);
-            }
-            else if(source.equals("send4"))
-            {
-                received4.setText("Float: " + x);
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(),"Other ReceiveEvent called",Toast.LENGTH_LONG);
+            if(source.equals("sendCounter")) {
+                myCounter.setText(String.valueOf(x));
             }
         }
 
@@ -260,78 +117,16 @@ public class MainActivity extends AppCompatActivity {
         public void receiveList(String source, Object... args) {
             pdPost("list: " + Arrays.toString(args));
 
-            if(source.equals("send1"))
-            {
-                received1.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send2"))
-            {
-                received2.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send3"))
-            {
-                received3.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send4"))
-            {
-                received4.setText("Message: " + Arrays.toString(args));
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(),"Other ReceiveEvent called",Toast.LENGTH_LONG);
-            }
         }
 
         @Override
         public void receiveMessage(String source, String symbol, Object... args) {
             pdPost("message: " + Arrays.toString(args));
-
-            if(source.equals("send1"))
-            {
-                received1.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send2"))
-            {
-                received2.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send3"))
-            {
-                received3.setText("Message: " + Arrays.toString(args));
-            }
-            else if(source.equals("send4"))
-            {
-                received4.setText("Message: " + Arrays.toString(args));
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(),"Other ReceiveEvent called",Toast.LENGTH_LONG);
-            }
         }
 
         @Override
         public void receiveSymbol(String source, String symbol) {
             pdPost("symbol: " + symbol);
-
-            if(source.equals("send1"))
-            {
-                received1.setText("Symbol: " + symbol);
-            }
-            else if(source.equals("send2"))
-            {
-                received2.setText("Symbol: " + symbol);
-            }
-            else if(source.equals("send3"))
-            {
-                received3.setText("Symbol: " + symbol);
-            }
-            else if(source.equals("send4"))
-            {
-                received4.setText("symbol: " + symbol);
-            }
-            else
-            {
-                Toast.makeText(getBaseContext(),"Other ReceiveEvent called",Toast.LENGTH_LONG);
-            }
         }
     };
 
@@ -341,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     {
         File dir = getFilesDir(); //Get current list of files in directory
         try {
-            IoUtils.extractZipResource(getResources().openRawResource(R.raw.synth), dir, true); //extract the zip file in raw called synth
+            IoUtils.extractZipResource(getResources().openRawResource(R.raw.counter), dir, true); //extract the zip file in raw called synth
             File pdPatch = new File(dir, patchName); //Create file pointer to patch
             PdBase.openPatch(pdPatch.getAbsolutePath()); //open patch
         }catch (IOException e)
@@ -359,17 +154,9 @@ public class MainActivity extends AppCompatActivity {
         dispatcher = new PdUiDispatcher(); //create UI dispatcher
         PdBase.setReceiver(dispatcher); //set dispatcher to receive items from puredata patches
 
-        dispatcher.addListener("send1",receiver1);
-        PdBase.subscribe("send1");
+        dispatcher.addListener("sendCounter",receiver1);
+        PdBase.subscribe("sendCounter");
 
-        dispatcher.addListener("send2",receiver1);
-        PdBase.subscribe("send2");
-
-        dispatcher.addListener("send3",receiver1);
-        PdBase.subscribe("send3");
-
-        dispatcher.addListener("send4",receiver1);
-        PdBase.subscribe("send4");
     }
 
 }

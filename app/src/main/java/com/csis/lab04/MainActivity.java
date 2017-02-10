@@ -36,14 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
     private PdUiDispatcher dispatcher; //must declare this to use later, used to receive data from sendEvents
 
-    TextView myCounter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//Mandatory
         setContentView(R.layout.activity_main);//Mandatory
 
-        myCounter = (TextView) findViewById(R.id.counter);
+
+        Switch onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);//declared the switch here pointing to id onOffSwitch
+
+        //Check to see if switch1 value changes
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                float val = (isChecked) ?  1.0f : 0.0f; // value = (get value of isChecked, if true val = 1.0f, if false val = 0.0f)
+                sendFloatPD("onOff", val); //send value to patch, receiveEvent names onOff
+
+            }
+        });
 
         try { // try the code below, catch errors if things go wrong
             initPD(); //method is below to start PD
@@ -81,55 +90,6 @@ public class MainActivity extends AppCompatActivity {
         PdBase.sendBang(receiver); //send bang to receiveEvent
     }
 
-    private PdReceiver receiver1 = new PdReceiver() {
-
-        private void pdPost(final String msg) {
-            Log.e("RECEIVED:", msg);
-
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                }
-            });
-        }
-
-        @Override
-        public void print(String s) {
-            Log.i("PRINT",s);
-            Toast.makeText(getBaseContext(),s,Toast.LENGTH_LONG);
-        }
-
-        @Override
-        public void receiveBang(String source)
-        {
-            pdPost("bang");
-        }
-
-        @Override
-        public void receiveFloat(String source, float x) {
-            pdPost("float: " + x);
-            if(source.equals("sendCounter")) {
-                myCounter.setText(String.valueOf(x));
-            }
-        }
-
-        @Override
-        public void receiveList(String source, Object... args) {
-            pdPost("list: " + Arrays.toString(args));
-
-        }
-
-        @Override
-        public void receiveMessage(String source, String symbol, Object... args) {
-            pdPost("message: " + Arrays.toString(args));
-        }
-
-        @Override
-        public void receiveSymbol(String source, String symbol) {
-            pdPost("symbol: " + symbol);
-        }
-    };
-
 
     //<---THIS METHOD LOADS SPECIFIED PATCH NAME----->
     private void loadPDPatch(String patchName) throws IOException
@@ -153,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         dispatcher = new PdUiDispatcher(); //create UI dispatcher
         PdBase.setReceiver(dispatcher); //set dispatcher to receive items from puredata patches
-
-        dispatcher.addListener("sendCounter",receiver1);
-        PdBase.subscribe("sendCounter");
 
     }
 

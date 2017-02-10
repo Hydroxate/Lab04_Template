@@ -10,6 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.csis.lab04.MainActivity">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,5 +19,14 @@
         android:id="@+id/counter"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <Switch
+        android:text="On/Off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/counter"
+        android:layout_marginTop="80dp"
+        android:id="@+id/onOffSwitch" />
 
 </RelativeLayout>
